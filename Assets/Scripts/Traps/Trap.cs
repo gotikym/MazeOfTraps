@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Trap : MonoBehaviour
+public abstract class Trap : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private ActivateZone _activateZone;
+
+    private Coroutine _activateTrap;
 
     private void OnEnable()
     {
@@ -19,13 +19,23 @@ public class Trap : MonoBehaviour
         _activateZone.Exited -= OnExitedActivateZone;
     }
 
+    protected virtual IEnumerator ActivateTrap()
+    {
+        yield return null;
+    }
+
+    protected virtual void DeactivateTrap()
+    {
+        StopCoroutine(_activateTrap);        
+    }
+
     private void OnEnteredActivateZone()
     {
-        _particleSystem.Play();
+        _activateTrap = StartCoroutine(ActivateTrap());
     }
 
     private void OnExitedActivateZone()
     {
-        _particleSystem.Stop();
+        DeactivateTrap();
     }
 }

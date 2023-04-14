@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
@@ -14,6 +16,7 @@ public class Movement : MonoBehaviour
     private float _maxRotation = 0;
     private double _lowMoveStick = 0.1;
     private float _groundCheckDistance = 0.1f;
+    private bool _isIced = false;
 
     private Rigidbody _rigidbody;
     private PlayerInput _input;
@@ -23,6 +26,7 @@ public class Movement : MonoBehaviour
     private bool _isGrounded;
 
     public bool IsGrounded => _isGrounded;
+    public bool IsIsed => _isIced;
 
     public event UnityAction RunnedForward;
     public event UnityAction WalkedBack;
@@ -36,6 +40,12 @@ public class Movement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _input = new PlayerInput();
         _input.Enable();
+        _player.Iced += OnIced;
+    }
+
+    private void OnDisable()
+    {
+        _player.Iced -= OnIced;
     }
 
     private void FixedUpdate()
@@ -43,8 +53,11 @@ public class Movement : MonoBehaviour
         _rotate = _input.Player.Look.ReadValue<Vector2>();
         _direction = _input.Player.Move.ReadValue<Vector2>();
 
-        Look(_rotate);
-        Move(_direction);
+        if (_isIced == false)
+        {
+            Look(_rotate);
+            Move(_direction);
+        }
 
         _isGrounded = Physics.CheckSphere(transform.position, _groundCheckDistance, _groundLayer);
         Idling();
@@ -104,5 +117,17 @@ public class Movement : MonoBehaviour
     {
         if (_isGrounded && _direction == Vector2.zero && _rotate == Vector2.zero)
             Idled?.Invoke();
+    }
+
+    private void OnIced()
+    {
+        _isIced = true;
+        StartCoroutine(Unfreeze(1));
+    }
+
+    private IEnumerator Unfreeze(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _isIced = false;
     }
 }

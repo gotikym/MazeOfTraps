@@ -26,19 +26,24 @@ public class AnimationsState : MonoBehaviour
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();       
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if(_movement.IsGrounded == false)
-            _animator.Play(AnimationJump);            
+        if (_movement.IsIsed)
+            Freeze();
+        else
+            Unfreeze();
+
+        if (_movement.IsGrounded == false)
+            _animator.Play(AnimationJump);
     }
 
     private void OnDisable()
     {
         _movement.RunnedForward -= OnRunned;
-        _movement.WalkedBack += OnWalkedBack;
+        _movement.WalkedBack -= OnWalkedBack;
         _movement.Jumped -= OnJumped;
         _movement.Idled -= OnIdled;
         _movement.RunnedLeft -= OnRunnedLeft;
@@ -73,5 +78,15 @@ public class AnimationsState : MonoBehaviour
     private void OnRunnedRight()
     {
         _animator.Play(AnimationRunRigth);
+    }
+
+    private void Freeze()
+    {
+        _animator.enabled = false;
+    }
+
+    private void Unfreeze()
+    {
+        _animator.enabled = true;
     }
 }
