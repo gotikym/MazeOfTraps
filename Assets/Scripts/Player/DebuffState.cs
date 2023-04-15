@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class Fireble : MonoBehaviour
+public class DebuffState : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private Renderer _foxRenderer;
@@ -10,6 +11,10 @@ public class Fireble : MonoBehaviour
 
     private Material _defoultMaterial;
     private Coroutine _previosesTask;
+
+    private float _debuffDuration = 2;
+
+    public event Action<float> Iced;
 
     private void Awake()
     {
@@ -29,25 +34,26 @@ public class Fireble : MonoBehaviour
     }
 
     public void OnFlamed()
-    {        
+    {
         _fireEffect.Play();
 
         if (_previosesTask != null)
-            StopCoroutine( _previosesTask );
+            StopCoroutine(_previosesTask);
 
-        _previosesTask = StartCoroutine(StopEffect(2));
+        _previosesTask = StartCoroutine(StopEffect(_debuffDuration));
     }
 
     private IEnumerator StopEffect(float delay)
     {
-        yield return new WaitForSeconds( delay );
+        yield return new WaitForSeconds(delay);
         _fireEffect.Stop();
     }
 
     private void OnIced()
     {
+        Iced?.Invoke(_debuffDuration);
         _foxRenderer.material = _iceMaterial;
-        StartCoroutine(Unfreeze(1));
+        _previosesTask = StartCoroutine(Unfreeze(_debuffDuration));
     }
 
     private IEnumerator Unfreeze(float delay)

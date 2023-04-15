@@ -5,7 +5,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private DebuffState _debuffState;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
@@ -40,12 +40,12 @@ public class Movement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _input = new PlayerInput();
         _input.Enable();
-        _player.Iced += OnIced;
+        _debuffState.Iced += OnIced;
     }
 
     private void OnDisable()
     {
-        _player.Iced -= OnIced;
+        _debuffState.Iced -= OnIced;
     }
 
     private void FixedUpdate()
@@ -119,10 +119,10 @@ public class Movement : MonoBehaviour
             Idled?.Invoke();
     }
 
-    private void OnIced()
+    private void OnIced(float delay)
     {
         _isIced = true;
-        StartCoroutine(Unfreeze(1));
+        StartCoroutine(Unfreeze(delay));
     }
 
     private IEnumerator Unfreeze(float delay)
