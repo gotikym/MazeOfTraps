@@ -274,7 +274,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &329463811
 GameObject:
@@ -834,7 +834,7 @@ Transform:
   - {fileID: 330585546}
   - {fileID: 7413782007573015055}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &429016526
 MonoBehaviour:
@@ -1375,7 +1375,7 @@ Transform:
   m_Children:
   - {fileID: 644455094}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &989795106
 GameObject:
@@ -1750,7 +1750,7 @@ Transform:
   m_Children:
   - {fileID: 405734387}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &1295255086
 PrefabInstance:
@@ -1875,7 +1875,7 @@ Transform:
   - {fileID: 1393969612}
   - {fileID: 1922720500}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1366175205
 PrefabInstance:
@@ -2471,6 +2471,38 @@ Transform:
   m_Father: {fileID: 1297425099}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2042999589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2042999590}
+  m_Layer: 0
+  m_Name: FrostTrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2042999590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042999589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.581732, y: 6.9777546, z: 48.71763}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4897858303456232}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2139092621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2683,6 +2715,7 @@ GameObject:
   - component: {fileID: 4897858303456232}
   - component: {fileID: 198433942640504744}
   - component: {fileID: 199651062711753528}
+  - component: {fileID: 199651062711753529}
   m_Layer: 0
   m_Name: IceLance
   m_TagString: Untagged
@@ -2794,7 +2827,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820681140111550}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 27.8, y: 0.7500019, z: 27.33}
+  m_LocalPosition: {x: 3.2182674, y: -6.2277527, z: -21.387629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2802,8 +2835,8 @@ Transform:
   - {fileID: 4534317915226736}
   - {fileID: 4805966295114340}
   - {fileID: 4846699896605576}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 2042999590}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!23 &23059950703616178
 MeshRenderer:
@@ -21904,6 +21937,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &199651062711753529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820681140111550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4c1d3544c205745bde9d3a611e1b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 25
 --- !u!199 &199981284401018522
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -31557,6 +31603,7 @@ GameObject:
   - component: {fileID: 531804189943082157}
   - component: {fileID: 409511910363254691}
   - component: {fileID: 408225063589862833}
+  - component: {fileID: 533971784214923150}
   m_Layer: 0
   m_Name: FlameStream
   m_TagString: Untagged
@@ -31564,6 +31611,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &533971784214923150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533971784214923149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500e7aab1e9aa874d8ab5f72f6aa16c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
 --- !u!1 &534705004464564399
 GameObject:
   m_ObjectHideFlags: 0

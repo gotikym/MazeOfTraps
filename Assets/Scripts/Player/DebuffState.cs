@@ -12,8 +12,6 @@ public class DebuffState : MonoBehaviour
     private Material _defoultMaterial;
     private Coroutine _previosesTask;
 
-    private float _debuffDuration = 2;
-
     public event Action<float> Iced;
 
     private void Awake()
@@ -33,14 +31,14 @@ public class DebuffState : MonoBehaviour
         _player.Iced -= OnIced;
     }
 
-    public void OnFlamed()
+    public void OnFlamed(float debuffDuration)
     {
         _fireEffect.Play();
 
         if (_previosesTask != null)
             StopCoroutine(_previosesTask);
 
-        _previosesTask = StartCoroutine(StopEffect(_debuffDuration));
+        _previosesTask = StartCoroutine(StopEffect(debuffDuration));
     }
 
     private IEnumerator StopEffect(float delay)
@@ -49,11 +47,11 @@ public class DebuffState : MonoBehaviour
         _fireEffect.Stop();
     }
 
-    private void OnIced()
+    private void OnIced(float debuffDuration)
     {
-        Iced?.Invoke(_debuffDuration);
+        Iced?.Invoke(debuffDuration);
         _foxRenderer.material = _iceMaterial;
-        _previosesTask = StartCoroutine(Unfreeze(_debuffDuration));
+        _previosesTask = StartCoroutine(Unfreeze(debuffDuration));
     }
 
     private IEnumerator Unfreeze(float delay)

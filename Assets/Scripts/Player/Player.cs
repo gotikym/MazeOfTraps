@@ -9,14 +9,20 @@ public class Player : MonoBehaviour
     private const string ParticleIceLance = "IceLance";
 
     public event Action HealthChanged;
-    public event Action Flamed;
-    public event Action Iced;
+    public event Action<float> Flamed;
+    public event Action<float> Iced;
 
     private void OnParticleCollision(GameObject other)
     {
-        if (other.name == ParticleFlameStream)
-            Flamed?.Invoke();
-        if (other.name == ParticleIceLance)
-            Iced?.Invoke();
+        if (other.TryGetComponent(out Flame flame))
+        {
+            Flamed?.Invoke(flame.DebuffDuration);
+            Debug.Log(flame.damage);
+        }
+        if (other.TryGetComponent(out FrostArrow frostArrow))
+        {
+            Iced?.Invoke(frostArrow.DebuffDuration);
+            Debug.Log(frostArrow.damage);
+        }
     }
 }
