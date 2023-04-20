@@ -7,15 +7,12 @@ public class AxeTrap : Trap
 
     protected override IEnumerator ActivateTrap()
     {
+        base.ActivateTrap();
+
         while (true)
         {
             transform.Rotate(Vector3.forward, _rotationSpeed * Time.deltaTime);
             yield return null;
         }
-    }
-
-    protected override void DeactivateTrap()
-    {
-        base.DeactivateTrap();
     }
 }

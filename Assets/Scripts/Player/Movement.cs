@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(InputSystem))]
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private DebuffState _debuffState;
+    [SerializeField] private Player _player;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
@@ -14,7 +16,7 @@ public class Movement : MonoBehaviour
     private float _speedReduction = 2;
     private float _minRotation = -10;
     private float _maxRotation = 0;
-    private double _lowMoveStick = 0.1;
+    private double _lowMoveStick = 0.2;
     private float _groundCheckDistance = 0.1f;
     private bool _isIced = false;
 
@@ -24,28 +26,29 @@ public class Movement : MonoBehaviour
     private Vector2 _rotate;
     private Vector2 _rotation;
     private bool _isGrounded;
+    Coroutine _previosesTask;
 
     public bool IsGrounded => _isGrounded;
     public bool IsIsed => _isIced;
 
-    public event UnityAction RunnedForward;
-    public event UnityAction WalkedBack;
-    public event UnityAction Jumped;
-    public event UnityAction Idled;
-    public event UnityAction RunnedLeft;
-    public event UnityAction RunnedRight;
+    public event Action RunnedForward;
+    public event Action WalkedBack;
+    public event Action Jumped;
+    public event Action Idled;
+    public event Action RunnedLeft;
+    public event Action RunnedRight;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _input = new PlayerInput();
         _input.Enable();
-        _debuffState.Iced += OnIced;
+        Player.Iced += OnIced;
     }
 
     private void OnDisable()
     {
-        _debuffState.Iced -= OnIced;
+        Player.Iced -= OnIced;
     }
 
     private void FixedUpdate()
@@ -63,6 +66,15 @@ public class Movement : MonoBehaviour
         Idling();
     }
 
+    public void OnJump()
+    {
+        if (_isGrounded && _isIced == false)
+        {
+            _rigidbody.AddForce(_jumpForce * Vector3.up, ForceMode.Impulse);
+            Jumped?.Invoke();
+        }
+    }
+
     private void Move(Vector2 direction)
     {
         if (direction.sqrMagnitude < _lowMoveStick)
@@ -71,11 +83,11 @@ public class Movement : MonoBehaviour
         float scaledMoveSpeed = _moveSpeed * Time.deltaTime;
         Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
 
-        if (direction.y < 0)
+        if (direction.y < 0 || direction.x != 0)
             scaledMoveSpeed = scaledMoveSpeed / _speedReduction;
 
         transform.position += move * scaledMoveSpeed;
-        MovedStraight(direction);
+        SetDirection(direction);
     }
 
     private void Look(Vector2 rotate)
@@ -89,22 +101,13 @@ public class Movement : MonoBehaviour
         transform.localEulerAngles = _rotation;
     }
 
-    private void OnJump()
+    private void SetDirection(Vector2 direction)
     {
         if (_isGrounded)
         {
-            _rigidbody.AddForce(_jumpForce * Vector3.up, ForceMode.Impulse);
-            Jumped?.Invoke();
-        }
-    }
-
-    private void MovedStraight(Vector2 direction)
-    {
-        if (_isGrounded)
-        {
-            if (direction.y > 0 && direction.x == 0)
+            if (direction.y > 0 && direction.x < _lowMoveStick && direction.x > -_lowMoveStick)
                 RunnedForward?.Invoke();
-            else if (direction.y < 0 && direction.x == 0)
+            else if (direction.y < 0 && direction.x < _lowMoveStick && direction.x > -_lowMoveStick)
                 WalkedBack?.Invoke();
             else if (direction.x > 0)
                 RunnedRight?.Invoke();
@@ -122,7 +125,11 @@ public class Movement : MonoBehaviour
     private void OnIced(float delay)
     {
         _isIced = true;
-        StartCoroutine(Unfreeze(delay));
+
+        if (_previosesTask != null)
+            StopCoroutine(_previosesTask);
+
+        _previosesTask = StartCoroutine(Unfreeze(delay));
     }
 
     private IEnumerator Unfreeze(float delay)

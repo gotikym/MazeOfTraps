@@ -1,28 +1,47 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private int _health = 100;
+    private float _health = 100;
+    private int _maxHealth = 100;
 
-    private const string ParticleFlameStream = "FlameStream";
-    private const string ParticleIceLance = "IceLance";
+    public int MaxHealth => _maxHealth;
 
-    public event Action HealthChanged;
-    public event Action<float> Flamed;
-    public event Action<float> Iced;
+    public static event Action<float> Flamed;
+    public static event Action<float> Iced;
+    public static event Action<float> Bleeded;
+    public event Action<float> TakedDamage;
+    public event Action<float> HealthChanged;
 
     private void OnParticleCollision(GameObject other)
     {
         if (other.TryGetComponent(out Flame flame))
         {
             Flamed?.Invoke(flame.DebuffDuration);
-            Debug.Log(flame.damage);
+            TakeDamage(flame.MakeDamage());
         }
-        if (other.TryGetComponent(out FrostArrow frostArrow))
+        if (other.TryGetComponent(out Freeze frostArrow))
         {
             Iced?.Invoke(frostArrow.DebuffDuration);
-            Debug.Log(frostArrow.damage);
+            TakeDamage(frostArrow.MakeDamage());
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Bleeding bleeding))
+        {
+            Bleeded?.Invoke(bleeding.DebuffDuration);
+            TakeDamage(bleeding.MakeDamage());
+        }
+    }
+
+    private void TakeDamage(float damage)
+    {
+        _health -= damage;
+        TakedDamage?.Invoke(damage);
+        HealthChanged?.Invoke(_health);
     }
 }

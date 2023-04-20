@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class Trap : MonoBehaviour
 {
     [SerializeField] private ActivateZone _activateZone;
+    [SerializeField] protected float _delayBeforeStart;
 
     private Coroutine _activateTrap;
 
@@ -21,7 +22,7 @@ public abstract class Trap : MonoBehaviour
 
     protected virtual IEnumerator ActivateTrap()
     {
-        yield return null;
+        yield return new WaitForSeconds(_delayBeforeStart);
     }
 
     protected virtual void DeactivateTrap()

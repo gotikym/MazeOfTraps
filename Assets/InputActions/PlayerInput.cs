@@ -124,6 +124,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""039b58d4-21ad-41e6-9b45-b2dbc612353c"",
+                    ""path"": ""<AndroidJoystick>/stick"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""TouchScreen"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0480ddb5-1591-43a9-8da2-05c380898056"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
@@ -135,7 +146,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""874e3364-febe-44c8-b997-4a9336f3e67e"",
+                    ""id"": ""14ebde7c-f36c-4e81-93f4-5c4aa14db117"",
+                    ""path"": ""<Touchscreen>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""TouchScreen"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6ada73e-cb33-4763-ad73-20049a4c4600"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -196,6 +218,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""TouchScreen"",
+            ""bindingGroup"": ""TouchScreen"",
+            ""devices"": []
         }
     ]
 }");
@@ -324,6 +351,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
             return asset.controlSchemes[m_GamepadSchemeIndex];
+        }
+    }
+    private int m_TouchScreenSchemeIndex = -1;
+    public InputControlScheme TouchScreenScheme
+    {
+        get
+        {
+            if (m_TouchScreenSchemeIndex == -1) m_TouchScreenSchemeIndex = asset.FindControlSchemeIndex("TouchScreen");
+            return asset.controlSchemes[m_TouchScreenSchemeIndex];
         }
     }
     public interface IPlayerActions
