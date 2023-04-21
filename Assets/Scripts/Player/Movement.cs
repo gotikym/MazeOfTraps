@@ -13,12 +13,13 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private LayerMask _groundLayer;
 
-    private float _speedReduction = 2;
+    private float _speedReduction = 1.5f;
     private float _minRotation = -10;
     private float _maxRotation = 0;
     private double _lowMoveStick = 0.2;
     private float _groundCheckDistance = 0.1f;
     private bool _isIced = false;
+    private bool _isForward = false;
 
     private Rigidbody _rigidbody;
     private PlayerInput _input;
@@ -83,11 +84,11 @@ public class Movement : MonoBehaviour
         float scaledMoveSpeed = _moveSpeed * Time.deltaTime;
         Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
 
-        if (direction.y < 0 || direction.x != 0)
+        if (direction.y < 0)
             scaledMoveSpeed = scaledMoveSpeed / _speedReduction;
 
         transform.position += move * scaledMoveSpeed;
-        SetDirection(direction);
+        IdentifyDirection(direction);
     }
 
     private void Look(Vector2 rotate)
@@ -101,7 +102,7 @@ public class Movement : MonoBehaviour
         transform.localEulerAngles = _rotation;
     }
 
-    private void SetDirection(Vector2 direction)
+    private void IdentifyDirection(Vector2 direction)
     {
         if (_isGrounded)
         {

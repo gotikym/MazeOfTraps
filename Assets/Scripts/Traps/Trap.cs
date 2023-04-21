@@ -20,10 +20,7 @@ public abstract class Trap : MonoBehaviour
         _activateZone.Exited -= OnExitedActivateZone;
     }
 
-    protected virtual IEnumerator ActivateTrap()
-    {
-        yield return new WaitForSeconds(_delayBeforeStart);
-    }
+    protected abstract IEnumerator ActivateTrap();
 
     protected virtual void DeactivateTrap()
     {

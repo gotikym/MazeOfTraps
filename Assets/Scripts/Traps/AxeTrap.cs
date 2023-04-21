@@ -7,7 +7,7 @@ public class AxeTrap : Trap
 
     protected override IEnumerator ActivateTrap()
     {
-        base.ActivateTrap();
+        yield return new WaitForSeconds(_delayBeforeStart);
 
         while (true)
         {

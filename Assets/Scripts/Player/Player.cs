@@ -6,12 +6,14 @@ public class Player : MonoBehaviour
 {
     private float _health = 100;
     private int _maxHealth = 100;
+    private int _minHealth = 0;
 
     public int MaxHealth => _maxHealth;
 
     public static event Action<float> Flamed;
     public static event Action<float> Iced;
     public static event Action<float> Bleeded;
+    public event Action Died;
     public event Action<float> TakedDamage;
     public event Action<float> HealthChanged;
 
@@ -40,8 +42,15 @@ public class Player : MonoBehaviour
 
     private void TakeDamage(float damage)
     {
-        _health -= damage;
-        TakedDamage?.Invoke(damage);
-        HealthChanged?.Invoke(_health);
+        if (_health > _minHealth)
+        {
+            _health -= damage;
+            TakedDamage?.Invoke(damage);
+            HealthChanged?.Invoke(_health);
+        }
+        else
+        {
+            Died?.Invoke();
+        }
     }
 }

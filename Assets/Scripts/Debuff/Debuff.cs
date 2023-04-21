@@ -10,9 +10,9 @@ public abstract class Debuff : MonoBehaviour
 
     protected Coroutine _previosesTask;
 
-    protected virtual void OnEnable() { }
+    protected abstract void OnEnable();
 
-    protected virtual void OnDisable() { }
+    protected abstract void OnDisable();
 
     public float MakeDamage()
     {
@@ -27,8 +27,5 @@ public abstract class Debuff : MonoBehaviour
         _previosesTask = StartCoroutine(StopEffect());
     }
 
-    protected virtual IEnumerator StopEffect()
-    {
-        yield return new WaitForSeconds(Duration);
-    }
+    protected abstract IEnumerator StopEffect();
 }
