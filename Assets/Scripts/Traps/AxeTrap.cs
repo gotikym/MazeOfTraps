@@ -8,10 +8,12 @@ public class AxeTrap : Trap
     protected override IEnumerator ActivateTrap()
     {
         yield return new WaitForSeconds(_delayBeforeStart);
+        _audioSource.Play();
 
         while (true)
         {
             transform.Rotate(Vector3.forward, _rotationSpeed * Time.deltaTime);
+
             yield return null;
         }
     }

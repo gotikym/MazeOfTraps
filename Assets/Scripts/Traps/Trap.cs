@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class Trap : MonoBehaviour
 {
     [SerializeField] private ActivateZone _activateZone;
+    [SerializeField] protected AudioSource _audioSource;
     [SerializeField] protected float _delayBeforeStart;
 
     private Coroutine _activateTrap;

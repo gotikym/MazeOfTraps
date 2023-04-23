@@ -18,6 +18,7 @@ public class ParticleTrap : Trap
         while (true)
         {
             _particleSystem.Play();
+            _audioSource.Play();
 
             while (currentDuration > _resetedTime)
             {
@@ -26,6 +27,7 @@ public class ParticleTrap : Trap
             }
 
             _particleSystem.Stop();
+            _audioSource.Stop();
 
             yield return new WaitForSeconds(_delay);
 
@@ -37,5 +39,6 @@ public class ParticleTrap : Trap
     {
         base.DeactivateTrap();
         _particleSystem.Stop();
+        _audioSource.Stop();
     }
 }

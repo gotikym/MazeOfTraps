@@ -19,7 +19,6 @@ public class Movement : MonoBehaviour
     private double _lowMoveStick = 0.2;
     private float _groundCheckDistance = 0.1f;
     private bool _isIced = false;
-    private bool _isForward = false;
 
     private Rigidbody _rigidbody;
     private PlayerInput _input;
