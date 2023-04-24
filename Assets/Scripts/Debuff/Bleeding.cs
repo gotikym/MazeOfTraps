@@ -24,6 +24,7 @@ public class Bleeding : Debuff
     public void OnBleeded(float debuffDuration)
     {
         _bleedingEffect.Play();
+        _audioSource.Play();
         StartEffect();
     }
 
@@ -31,5 +32,6 @@ public class Bleeding : Debuff
     {
         yield return new WaitForSeconds(Duration);
         _bleedingEffect.Stop();
+        _audioSource.Stop();
     }
 }

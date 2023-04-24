@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class Debuff : MonoBehaviour
 {
+    [SerializeField] protected AudioSource _audioSource;
+
     protected float Damage = 0f;
     protected float Duration = 0f;
 

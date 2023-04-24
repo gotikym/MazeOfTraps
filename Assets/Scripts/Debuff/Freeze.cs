@@ -32,7 +32,7 @@ public class Freeze : Debuff
     private void OnIced(float debuffDuration)
     {
         _foxRenderer.material = _iceMaterial;
-
+        _audioSource.Play();
         StartEffect();
     }
 
@@ -40,5 +40,6 @@ public class Freeze : Debuff
     {
         yield return new WaitForSeconds(Duration);
         _foxRenderer.material = _defoultMaterial;
+        _audioSource.Stop();
     }
 }

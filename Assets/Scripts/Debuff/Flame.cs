@@ -24,6 +24,7 @@ public class Flame : Debuff
     public void OnFlamed(float debuffDuration)
     {
         _fireEffect.Play();
+        _audioSource.Play();
         StartEffect();
     }
 
@@ -31,5 +32,6 @@ public class Flame : Debuff
     {
         yield return new WaitForSeconds(Duration);
         _fireEffect.Stop();
+        _audioSource.Stop();
     }
 }

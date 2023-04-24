@@ -22,5 +22,7 @@ public abstract class Sounds : MonoBehaviour
             AudioSource.PlayClipAtPoint(audio, transform.position, volume);
         else
             _audioSource.PlayOneShot(audio, volume);
+
+        
     }
 }

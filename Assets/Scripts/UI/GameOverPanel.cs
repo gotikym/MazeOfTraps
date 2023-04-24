@@ -38,14 +38,14 @@ public class GameOverPanel : MonoBehaviour
     {
         _panel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
         Time.timeScale = _runningTimeScale;
+        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
     }
 
     public void OnMainMenuButtonClick()
     {
         MainMenu.Load();
-        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
         Time.timeScale = _runningTimeScale;
+        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
     }
 }
