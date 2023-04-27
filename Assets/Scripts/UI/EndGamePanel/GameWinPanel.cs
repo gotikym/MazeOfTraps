@@ -11,6 +11,6 @@ public class GameWinPanel : EndGamePanel
 
     protected override void OnDisable()
     {
-        _finish.Entered += OpenPanel;
+        _finish.Entered -= OpenPanel;
     }
 }

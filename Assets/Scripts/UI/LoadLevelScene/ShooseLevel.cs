@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ShooseLevel : MonoBehaviour
+public abstract class ShooseLevel : MonoBehaviour
 {
     protected int Level;
 
