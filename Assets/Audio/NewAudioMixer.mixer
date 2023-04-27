@@ -75,7 +75,7 @@ AudioMixerController:
     - b8645c4ebbc4b0340966fae6e7063785
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 6614031323114005749}
+  m_TargetSnapshot: {fileID: 7654501673280234399}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Died
+  m_Name: EndGame
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 733ce006ff0493d4b80667b44f850ff9
   m_FloatValues:
