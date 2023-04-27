@@ -41,15 +41,11 @@ public class Player : MonoBehaviour
 
     private void TakeDamage(float damage)
     {
-        if (_health > _minHealth)
-        {
-            _health -= damage;
-            TakedDamage?.Invoke(damage);
-            HealthChanged?.Invoke(_health);
-        }
-        else
-        {
+        _health -= damage;
+        TakedDamage?.Invoke(damage);
+        HealthChanged?.Invoke(_health);
+
+        if (_health <= _minHealth)
             Died?.Invoke();
-        }
     }
 }
