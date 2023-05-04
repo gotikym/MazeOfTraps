@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private LayerMask _groundLayer;
 
+    private const string BuffSpeedName = "Speed";
+    private const string BuffJumpName = "Jump";
+
     private float _speedReduction = 1.5f;
     private float _minRotation = -10;
     private float _maxRotation = 0;
@@ -20,6 +24,8 @@ public class Movement : MonoBehaviour
     private float _groundCheckDistance = 0.1f;
     private bool _isIced = false;
 
+    private float _normalSpeed;
+    private float _normalJumpForce;
     private Rigidbody _rigidbody;
     private PlayerInput _input;
     private Vector2 _direction;
@@ -40,15 +46,19 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        _normalSpeed = _moveSpeed;
+        _normalJumpForce = _jumpForce;
         _rigidbody = GetComponent<Rigidbody>();
         _input = new PlayerInput();
         _input.Enable();
-        Player.Iced += OnIced;
+        _player.Freezed += OnFreezed;
+        Dice.Buffed += OnBuffed;
     }
 
     private void OnDisable()
     {
-        Player.Iced -= OnIced;
+        _player.Freezed -= OnFreezed;
+        Dice.Buffed -= OnBuffed;
     }
 
     private void FixedUpdate()
@@ -122,7 +132,7 @@ public class Movement : MonoBehaviour
             Idled?.Invoke();
     }
 
-    private void OnIced(float delay)
+    private void OnFreezed(float delay)
     {
         _isIced = true;
 
@@ -136,5 +146,43 @@ public class Movement : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _isIced = false;
+    }
+
+    private void OnBuffed(Buff buff)
+    {
+        switch (buff.Name)
+        {
+            case BuffSpeedName:
+                SpeedBuff(buff.Strength, buff.Duration);
+                break;
+            case BuffJumpName:
+                JumpBuff(buff.Strength, buff.Duration);
+                break;
+        }
+    }
+
+    private void SpeedBuff(float strength, float duration)
+    {
+        _moveSpeed += strength;
+        StartCoroutine(SpeedBuffDurationTimer(duration));
+        
+    }
+
+    private void JumpBuff(float strength, float duration)
+    {
+        _jumpForce += strength;
+        StartCoroutine(JumpBuffDurationTimer(duration));        
+    }
+
+    private IEnumerator JumpBuffDurationTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _jumpForce = _normalJumpForce;
+    }
+
+    private IEnumerator SpeedBuffDurationTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _moveSpeed = _normalSpeed;
     }
 }

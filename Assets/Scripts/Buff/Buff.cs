@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Buff : MonoBehaviour
+public abstract class Buff : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract string Name { get; }
+    public abstract float Duration { get; }
+    public abstract float Strength { get; }
 }

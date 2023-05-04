@@ -9,33 +9,33 @@ public class Player : MonoBehaviour
 
     public int MaxHealth => _maxHealth;
 
-    public static event Action<float> Flamed;
-    public static event Action<float> Iced;
-    public static event Action<float> Bleeded;
-    public event Action Died;
+    public event Action<float> Flamed;
+    public event Action<float> Freezed;
+    public event Action<float> Bleeded;
     public event Action<float> TakedDamage;
     public event Action<float> HealthChanged;
+    public event Action Died;
 
     private void OnParticleCollision(GameObject other)
     {
         if (other.TryGetComponent(out Flame flame))
         {
-            Flamed?.Invoke(flame.DebuffDuration);
-            TakeDamage(flame.MakeDamage());
+            Flamed?.Invoke(flame.Duration);
+            TakeDamage(flame.Damage);
         }
-        if (other.TryGetComponent(out Freeze frostArrow))
+        if (other.TryGetComponent(out IceLance iceLance))
         {
-            Iced?.Invoke(frostArrow.DebuffDuration);
-            TakeDamage(frostArrow.MakeDamage());
+            Freezed?.Invoke(iceLance.Duration);
+            TakeDamage(iceLance.Damage);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Bleeding bleeding))
+        if (other.TryGetComponent(out Axe axe))
         {
-            Bleeded?.Invoke(bleeding.DebuffDuration);
-            TakeDamage(bleeding.MakeDamage());
+            Bleeded?.Invoke(axe.Duration);
+            TakeDamage(axe.Damage);
         }
     }
 
