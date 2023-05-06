@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,20 @@ public class Dice : MonoBehaviour
 
     private float _destroyTimer = 2f;
 
+    private Quaternion _startTransform;
+    private float _angle;
+
     public static event Action<Buff> Buffed;
+
+    private void Start()
+    {
+        _startTransform = transform.localRotation;
+    }
+
+    private void FixedUpdate()
+    {
+        Rotation();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -40,5 +54,11 @@ public class Dice : MonoBehaviour
 
         yield return new WaitForSeconds(_destroyTimer);
         Destroy(gameObject);
+    }
+
+    private void Rotation()
+    {
+        _angle += Time.deltaTime;
+        transform.rotation = _startTransform * quaternion.RotateX(_angle) * quaternion.RotateY(_angle);
     }
 }
