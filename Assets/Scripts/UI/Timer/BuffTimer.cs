@@ -10,6 +10,7 @@ public class BuffTimer : MonoBehaviour
     [SerializeField] private TMP_Text _timerBuffText;
 
     private float _currentTime;
+    private Coroutine _previosesTask;
 
     private void OnEnable()
     {
@@ -25,7 +26,10 @@ public class BuffTimer : MonoBehaviour
     {
         _buffTimerImage.SetActive(true);
 
-        StartCoroutine(FillingTimeBar(buff.Duration, buff.Name));
+        if (_previosesTask != null)
+            StopCoroutine(_previosesTask);
+
+        _previosesTask = StartCoroutine(FillingTimeBar(buff.Duration, buff.Name));
     }
 
     private IEnumerator FillingTimeBar(float buffTime, string buffName)

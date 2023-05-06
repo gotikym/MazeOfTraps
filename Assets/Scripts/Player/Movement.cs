@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,7 +31,10 @@ public class Movement : MonoBehaviour
     private Vector2 _rotate;
     private Vector2 _rotation;
     private bool _isGrounded;
-    Coroutine _previosesTask;
+    private Coroutine _FreezedTask;
+    private Coroutine _BuffJumpTask;
+    private Coroutine _BuffSpeedTask;
+
 
     public bool IsGrounded => _isGrounded;
     public bool IsIsed => _isIced;
@@ -136,10 +138,10 @@ public class Movement : MonoBehaviour
     {
         _isIced = true;
 
-        if (_previosesTask != null)
-            StopCoroutine(_previosesTask);
+        if (_FreezedTask != null)
+            StopCoroutine(_FreezedTask);
 
-        _previosesTask = StartCoroutine(Unfreeze(delay));
+        _FreezedTask = StartCoroutine(Unfreeze(delay));
     }
 
     private IEnumerator Unfreeze(float delay)
@@ -164,23 +166,30 @@ public class Movement : MonoBehaviour
     private void SpeedBuff(float strength, float duration)
     {
         _moveSpeed += strength;
-        StartCoroutine(SpeedBuffDurationTimer(duration));
-        
+
+        if (_BuffSpeedTask != null)
+            StopCoroutine(_BuffSpeedTask);
+
+        _BuffSpeedTask = StartCoroutine(SpeedBuffDurationTimer(duration, strength));        
     }
 
     private void JumpBuff(float strength, float duration)
     {
         _jumpForce += strength;
-        StartCoroutine(JumpBuffDurationTimer(duration));        
+
+        if (_BuffJumpTask != null)
+            StopCoroutine(_BuffJumpTask);
+
+        _BuffJumpTask = StartCoroutine(JumpBuffDurationTimer(duration, strength));        
     }
 
-    private IEnumerator JumpBuffDurationTimer(float duration)
+    private IEnumerator JumpBuffDurationTimer(float duration, float strength)
     {
         yield return new WaitForSeconds(duration);
         _jumpForce = _normalJumpForce;
     }
 
-    private IEnumerator SpeedBuffDurationTimer(float duration)
+    private IEnumerator SpeedBuffDurationTimer(float duration, float strength)
     {
         yield return new WaitForSeconds(duration);
         _moveSpeed = _normalSpeed;
