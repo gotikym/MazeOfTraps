@@ -31,7 +31,6 @@ public class LoadLevelScene : MonoBehaviour
             case NumberLevel2: Level2.Load(); break;
             case NumberLevel3: Level3.Load(); break;
         }
-
     }
 
     private void OnLevelShoosed(int numberLevel)

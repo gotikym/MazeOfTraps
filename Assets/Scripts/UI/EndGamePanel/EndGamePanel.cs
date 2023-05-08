@@ -34,7 +34,7 @@ public abstract class EndGamePanel : MonoBehaviour
         _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
     }
 
-    protected void OpenPanel()
+    protected virtual void OpenPanel()
     {
         _panel.SetActive(true);
         Time.timeScale = _stoppedTimeScale;

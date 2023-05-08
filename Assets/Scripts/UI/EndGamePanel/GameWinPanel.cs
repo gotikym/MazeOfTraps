@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameWinPanel : EndGamePanel
 {
@@ -12,5 +13,11 @@ public class GameWinPanel : EndGamePanel
     protected override void OnDisable()
     {
         _finish.Entered -= OpenPanel;
+    }
+
+    protected override void OpenPanel()
+    {
+        base.OpenPanel();
+        PlayerPrefs.SetInt("currentScene", SceneManager.GetActiveScene().buildIndex);
     }
 }
