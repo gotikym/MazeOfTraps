@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GotoMain : MonoBehaviour
 {
-    public void OnButtonClick()
+    public void OpenMainMenu()
     {
         MainMenu.Load();
     }

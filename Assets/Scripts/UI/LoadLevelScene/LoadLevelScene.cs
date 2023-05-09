@@ -13,15 +13,15 @@ public class LoadLevelScene : MonoBehaviour
 
     private void OnEnable()
     {
-        ShooseLevel.LevelShoosed += OnLevelShoosed;
+        ChooseLevel.LevelChoosed += OnLevelChoosed;
     }
 
     private void OnDisable()
     {
-        ShooseLevel.LevelShoosed -= OnLevelShoosed;        
+        ChooseLevel.LevelChoosed -= OnLevelChoosed;        
     }
 
-    public void OnButtonClick()
+    public void LoadLevel()
     {
         _loadScreen.SetActive(true);
 
@@ -33,7 +33,7 @@ public class LoadLevelScene : MonoBehaviour
         }
     }
 
-    private void OnLevelShoosed(int numberLevel)
+    private void OnLevelChoosed(int numberLevel)
     {
         _numberLevel = numberLevel;
     }
