@@ -17,6 +17,11 @@ public class Menu : MonoBehaviour
         Time.timeScale = _runningTimeScale;
     }
 
+    public void CloseSubPanel(GameObject panel)
+    {
+        panel.SetActive(false);
+    }
+
     public void Exit()
     {
         Application.Quit();

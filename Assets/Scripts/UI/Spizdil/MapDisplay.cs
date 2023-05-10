@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MapDisplay : MonoBehaviour
 {
@@ -11,7 +12,11 @@ public class MapDisplay : MonoBehaviour
     [SerializeField] private Button playButton;
     [SerializeField] private GameObject lockImage;
     [SerializeField] private GameObject _loadScreen;
+    [SerializeField] protected AudioMixerGroup _mixerGroup;
 
+    private const string NormalSnapshotName = "Normal";
+    private int _runningTimeScale = 1;
+    
     private string _sceneName;
 
     public void DisplayMap(Map map)
@@ -34,6 +39,8 @@ public class MapDisplay : MonoBehaviour
 
     public void LoadScene()
     {
+        Time.timeScale = _runningTimeScale;
+        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
         _loadScreen.SetActive(true);
         SceneManager.LoadScene(_sceneName);
     }

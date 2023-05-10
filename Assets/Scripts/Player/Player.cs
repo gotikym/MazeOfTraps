@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     private int _maxHealth = 100;
     private int _minHealth = 0;
 
+    private int _money;
+
     public int MaxHealth => _maxHealth;
 
     public event Action<float> Flamed;
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
     public event Action<float> Bleeded;
     public event Action<float> TakedDamage;
     public event Action<float> HealthChanged;
+    public event Action<int> MoneyChanged;
     public event Action Died;
 
     private void OnParticleCollision(GameObject other)
@@ -37,6 +40,12 @@ public class Player : MonoBehaviour
             Bleeded?.Invoke(axe.Duration);
             TakeDamage(axe.Damage);
         }
+    }
+
+    public void TakeMoney(int money)
+    {
+        _money += money;
+        MoneyChanged?.Invoke(_money);
     }
 
     private void TakeDamage(float damage)

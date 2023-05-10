@@ -5,15 +5,16 @@ using UnityEngine.SceneManagement;
 
 public abstract class EndGamePanel : MonoBehaviour
 {
-    [SerializeField] protected GameObject _panel;
-    [SerializeField] protected AudioSource _audioSource;
-    [SerializeField] protected AudioMixerGroup _mixerGroup;
+    [SerializeField] protected GameObject Panel;
+    [SerializeField] protected AudioSource AudioSource;
+    [SerializeField] protected AudioMixerGroup MixerGroup;
 
     protected const string DiedSnapshotName = "EndGame";
     protected const string NormalSnapshotName = "Normal";
 
-    protected int _stoppedTimeScale = 0;
-    protected int _runningTimeScale = 1;
+    protected int StoppedTimeScale = 0;
+    protected int RunningTimeScale = 1;
+    protected int NextSceneIndex = 1;
 
     protected abstract void OnEnable();
 
@@ -21,24 +22,33 @@ public abstract class EndGamePanel : MonoBehaviour
 
     public void OnRestartButtonClick()
     {
-        _panel.SetActive(false);
+        Panel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = _runningTimeScale;
-        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
+        Time.timeScale = RunningTimeScale;
+        MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
     }
 
     public void OnMainMenuButtonClick()
     {
         MainMenu.Load();
-        Time.timeScale = _runningTimeScale;
-        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
+        Time.timeScale = RunningTimeScale;
+        MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
+    }
+
+    public void OnNextLevelButtonClick()
+    {
+        Panel.SetActive(false);
+        Time.timeScale = RunningTimeScale;
+        MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     protected virtual void OpenPanel()
     {
-        _panel.SetActive(true);
-        Time.timeScale = _stoppedTimeScale;
-        _mixerGroup.audioMixer.FindSnapshot(DiedSnapshotName).TransitionTo(1f);
-        _audioSource.Play();
+        Panel.SetActive(true);
+        Time.timeScale = StoppedTimeScale;
+        MixerGroup.audioMixer.FindSnapshot(DiedSnapshotName).TransitionTo(1f);
+        AudioSource.Play();
     }
+
 }
