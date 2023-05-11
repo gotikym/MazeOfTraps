@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     private int _money;
 
+    public int Money => _money;
     public int MaxHealth => _maxHealth;
 
     public event Action<float> Flamed;
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
     {
         _money += money;
         MoneyChanged?.Invoke(_money);
+        PlayerPrefs.SetInt("Money", _money);
     }
 
     private void TakeDamage(float damage)

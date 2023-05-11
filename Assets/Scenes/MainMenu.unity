@@ -1719,6 +1719,7 @@ GameObject:
   - component: {fileID: 567617914}
   - component: {fileID: 567617913}
   - component: {fileID: 567617916}
+  - component: {fileID: 567617917}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1825,6 +1826,18 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &567617917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567617912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53cf1a5195576474a98f6446963318d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &673232455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,7 +2292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0fbe46197f6874e91e9c7f2b8d4f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjects:
+  _maps:
   - {fileID: 11400000, guid: 193507041e190f94192dfdb1d4f84a42, type: 2}
   - {fileID: 11400000, guid: 6fac172c75de2304096041c34091d88f, type: 2}
   - {fileID: 11400000, guid: d16ad1c47fae4a44b909fa4a3ed6e4e6, type: 2}
@@ -2381,8 +2394,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 775192802}
-        m_TargetAssemblyTypeName: ScriptableObjectsController, Assembly-CSharp
-        m_MethodName: ChangeScriptableObject
+        m_TargetAssemblyTypeName: SwitchMap, Assembly-CSharp
+        m_MethodName: ChooseMap
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3351,8 +3364,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 775192802}
-        m_TargetAssemblyTypeName: ScriptableObjectsController, Assembly-CSharp
-        m_MethodName: ChangeScriptableObject
+        m_TargetAssemblyTypeName: SwitchMap, Assembly-CSharp
+        m_MethodName: ChooseMap
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

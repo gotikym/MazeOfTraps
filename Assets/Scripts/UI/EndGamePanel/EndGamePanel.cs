@@ -9,7 +9,7 @@ public abstract class EndGamePanel : MonoBehaviour
     [SerializeField] protected AudioSource AudioSource;
     [SerializeField] protected AudioMixerGroup MixerGroup;
 
-    protected const string DiedSnapshotName = "EndGame";
+    protected const string EndGameSnapshotName = "EndGame";
     protected const string NormalSnapshotName = "Normal";
 
     protected int StoppedTimeScale = 0;
@@ -43,12 +43,11 @@ public abstract class EndGamePanel : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    protected virtual void OpenPanel()
+    protected void OpenPanel()
     {
         Panel.SetActive(true);
         Time.timeScale = StoppedTimeScale;
-        MixerGroup.audioMixer.FindSnapshot(DiedSnapshotName).TransitionTo(1f);
+        MixerGroup.audioMixer.FindSnapshot(EndGameSnapshotName).TransitionTo(1f);
         AudioSource.Play();
     }
-
 }

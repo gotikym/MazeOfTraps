@@ -14,10 +14,4 @@ public class GameWinPanel : EndGamePanel
     {
         _finish.Entered -= OpenPanel;
     }
-
-    protected override void OpenPanel()
-    {
-        base.OpenPanel();
-        PlayerPrefs.SetInt("currentScene", SceneManager.GetActiveScene().buildIndex);
-    }
 }
