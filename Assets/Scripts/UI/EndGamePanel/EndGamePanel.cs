@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public abstract class EndGamePanel : MonoBehaviour
 {
     [SerializeField] protected GameObject Panel;
+    [SerializeField] protected GameObject LoadScreen;
     [SerializeField] protected AudioSource AudioSource;
     [SerializeField] protected AudioMixerGroup MixerGroup;
 
@@ -30,6 +31,7 @@ public abstract class EndGamePanel : MonoBehaviour
 
     public void OnMainMenuButtonClick()
     {
+        LoadScreen.SetActive(true);
         MainMenu.Load();
         Time.timeScale = RunningTimeScale;
         MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
@@ -38,6 +40,7 @@ public abstract class EndGamePanel : MonoBehaviour
     public void OnNextLevelButtonClick()
     {
         Panel.SetActive(false);
+        LoadScreen.SetActive(true);
         Time.timeScale = RunningTimeScale;
         MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
