@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
     public event Action<int> MoneyChanged;
     public event Action Died;
 
+    private void OnEnable()
+    {
+        _money = PlayerPrefs.GetInt("Money");
+    }
+
     private void OnParticleCollision(GameObject other)
     {
         if (other.TryGetComponent(out Flame flame))
