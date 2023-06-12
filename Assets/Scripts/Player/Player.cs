@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private List<Goods> _goods;
+
     private float _health = 100;
     private int _maxHealth = 100;
     private int _minHealth = 0;
@@ -51,8 +54,15 @@ public class Player : MonoBehaviour
     public void TakeMoney(int money)
     {
         _money += money;
-        MoneyChanged?.Invoke(_money);
-        PlayerPrefs.SetInt("Money", _money);
+        ChangeMoney();
+    }
+
+    public void BuyGoods(Goods goods)
+    {
+        _money -= goods.Price;
+        MoneyChanged?.Invoke(Money);
+        _goods.Add(goods);
+        ChangeMoney();
     }
 
     private void TakeDamage(float damage)
@@ -63,5 +73,11 @@ public class Player : MonoBehaviour
 
         if (_health <= _minHealth)
             Died?.Invoke();
+    }
+
+    private void ChangeMoney()
+    {
+        MoneyChanged?.Invoke(_money);
+        PlayerPrefs.SetInt("Money", _money);
     }
 }
