@@ -26,10 +26,10 @@ public class Shop : MonoBehaviour
 
     private void OnSellButtonClick(Goods goods, GoodsView view)
     {
-        TrySellWeapon(goods, view);
+        TrySellGoods(goods, view);
     }
 
-    private void TrySellWeapon(Goods goods, GoodsView view)
+    private void TrySellGoods(Goods goods, GoodsView view)
     {
         if (goods.Price <= _player.Money)
         {

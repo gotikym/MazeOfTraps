@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private List<Goods> _goods;
+    [SerializeField] private List<Goods> _inventory;
 
     private float _health = 100;
     private int _maxHealth = 100;
@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 
     private int _money;
 
+    public List<Goods> Inventory => _inventory;
     public int Money => _money;
     public int MaxHealth => _maxHealth;
 
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     public event Action<float> TakedDamage;
     public event Action<float> HealthChanged;
     public event Action<int> MoneyChanged;
+    public event Action InventoryChanged;
     public event Action Died;
 
     private void OnEnable()
@@ -61,7 +63,8 @@ public class Player : MonoBehaviour
     {
         _money -= goods.Price;
         MoneyChanged?.Invoke(Money);
-        _goods.Add(goods);
+        _inventory.Add(goods);
+        InventoryChanged?.Invoke();
         ChangeMoney();
     }
 
