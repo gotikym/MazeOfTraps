@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,9 @@ public class PathButton : MonoBehaviour
     [SerializeField] private GameObject _path;
     [SerializeField] private Image _buttonImage;
     [SerializeField] private Button _pathButton;
+    [SerializeField] private float _durationShowPath;
 
-    private const string PathLabel = "Line";
+    private const string PathLabel = "Path";
 
     public event Action<string> PathUsed;
 
@@ -29,9 +31,9 @@ public class PathButton : MonoBehaviour
         _inventory.InventoryChanged -= InventoryChanged;
     }
 
-    public void UsePath()
+    public void UseButtonPath()
     {
-        _path.SetActive(true);
+        StartCoroutine(ShowPath());
         PathUsed?.Invoke(PathLabel);
         LockedButton();
         FindGoodsPath();
@@ -63,5 +65,15 @@ public class PathButton : MonoBehaviour
     {
         _pathButton.interactable = true;
         _buttonImage.color = Color.white;
+    }
+
+    private IEnumerator ShowPath()
+    {
+        var durationShowPath = new WaitForSeconds(_durationShowPath);
+        _path.SetActive(true);
+
+        yield return durationShowPath;
+
+        _path.SetActive(false);
     }
 }

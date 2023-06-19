@@ -6,6 +6,7 @@ public class JumpUpEffect : Effects
     [SerializeField] private ParticleSystem _jumpEffect;
 
     private const string BuffJumpName = "Jump";
+
     protected override void OnEnable()
     {
         Dice.Buffed += OnBuffed;
