@@ -15,10 +15,10 @@ public class PathButton : MonoBehaviour
 
     public event Action<string> PathUsed;
 
-    private void Awake()
+    private void Start()
     {
         LockedButton();
-        FindGoodsPath();
+        FindGoodsPath();        
     }
 
     private void OnEnable()
