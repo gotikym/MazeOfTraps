@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +6,8 @@ public class Player : MonoBehaviour
     private float _health = 100;
     private int _maxHealth = 100;
     private int _minHealth = 0;
+
+    private const string MoneyKey = "Money";
 
     private int _money;
 
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        _money = PlayerPrefs.GetInt("Money");
+        _money = PlayerPrefs.GetInt(MoneyKey);
     }
 
     private void OnParticleCollision(GameObject other)
@@ -77,6 +78,6 @@ public class Player : MonoBehaviour
     private void ChangeMoney()
     {
         MoneyChanged?.Invoke(_money);
-        PlayerPrefs.SetInt("Money", _money);
+        PlayerPrefs.SetInt(MoneyKey, _money);
     }
 }

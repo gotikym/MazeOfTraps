@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PathButton _path;
 
+    private const string InventoryKey = "Inventory";
     private const string FirstGoodsKey = "Inventory0";
     private const string InventoryCountKey = "InventoryCount";
 
@@ -59,7 +60,7 @@ public class Inventory : MonoBehaviour
             PlayerPrefs.DeleteKey(FirstGoodsKey);
         else
             for (int i = 0; i < _bag.Count; i++)
-                PlayerPrefs.SetInt("Inventory" + i, _bag[i].Id);
+                PlayerPrefs.SetInt(InventoryKey + i, _bag[i].Id);
     }
 
     private void Load()
@@ -70,7 +71,7 @@ public class Inventory : MonoBehaviour
         {
             for (int j = 0; j < _allItems.AllGoods.Count; j++)
             {
-                if (PlayerPrefs.GetInt("Inventory" + i) == _allItems.AllGoods[j].Id)
+                if (PlayerPrefs.GetInt(InventoryKey + i) == _allItems.AllGoods[j].Id)
                     _bag.Add(_allItems.AllGoods[j]);
             }
         }

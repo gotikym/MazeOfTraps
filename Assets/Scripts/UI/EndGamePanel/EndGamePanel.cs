@@ -7,11 +7,9 @@ public abstract class EndGamePanel : MonoBehaviour
 {
     [SerializeField] protected GameObject Panel;
     [SerializeField] protected GameObject LoadScreen;
-    [SerializeField] protected AudioSource AudioSource;
+    [SerializeField] protected AudioSource BackGroundMusic;
+    [SerializeField] protected AudioSource EndGameMusic;
     [SerializeField] protected AudioMixerGroup MixerGroup;
-
-    protected const string EndGameSnapshotName = "EndGame";
-    protected const string NormalSnapshotName = "Normal";
 
     protected int StoppedTimeScale = 0;
     protected int RunningTimeScale = 1;
@@ -26,7 +24,6 @@ public abstract class EndGamePanel : MonoBehaviour
         Panel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = RunningTimeScale;
-        MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
     }
 
     public void OnMainMenuButtonClick()
@@ -34,7 +31,6 @@ public abstract class EndGamePanel : MonoBehaviour
         LoadScreen.SetActive(true);
         MainMenu.Load();
         Time.timeScale = RunningTimeScale;
-        MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(1f);
     }
 
     public void OnNextLevelButtonClick()
@@ -42,15 +38,14 @@ public abstract class EndGamePanel : MonoBehaviour
         Panel.SetActive(false);
         LoadScreen.SetActive(true);
         Time.timeScale = RunningTimeScale;
-        MixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + NextSceneIndex);
     }
 
     protected void OpenPanel()
     {
         Panel.SetActive(true);
         Time.timeScale = StoppedTimeScale;
-        MixerGroup.audioMixer.FindSnapshot(EndGameSnapshotName).TransitionTo(1f);
-        AudioSource.Play();
+        BackGroundMusic.Stop();
+        EndGameMusic.Play();
     }
 }

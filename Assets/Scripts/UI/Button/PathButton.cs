@@ -12,6 +12,7 @@ public class PathButton : MonoBehaviour
     [SerializeField] private float _durationShowPath;
 
     private const string PathLabel = "Path";
+    private Coroutine _previosesTask;
 
     public event Action<string> PathUsed;
 
@@ -33,7 +34,10 @@ public class PathButton : MonoBehaviour
 
     public void UseButtonPath()
     {
-        StartCoroutine(ShowPath());
+        if(_previosesTask != null)
+            StopCoroutine(_previosesTask);
+
+        _previosesTask = StartCoroutine(ShowPath());
         PathUsed?.Invoke(PathLabel);
         LockedButton();
         FindGoodsPath();

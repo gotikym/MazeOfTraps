@@ -6,6 +6,8 @@ public class HintRenderer : MonoBehaviour
     [SerializeField] private MazeSpawner _mazeSpawner;
     [SerializeField] private LineRenderer _componentLineRenderer;
 
+    private int _maxNumberPositions = 10000;
+
     public void DrawPath()
     {
         Maze maze = _mazeSpawner.maze;
@@ -13,7 +15,7 @@ public class HintRenderer : MonoBehaviour
         int y = maze.finishPosition.y;
         List<Vector3> positions = new List<Vector3>();
 
-        while ((x != 0 || y != 0) && positions.Count < 10000)
+        while ((x != 0 || y != 0) && positions.Count < _maxNumberPositions)
         {
             positions.Add(new Vector3(x * _mazeSpawner.CellSize.x, y * _mazeSpawner.CellSize.y, y * _mazeSpawner.CellSize.z));
 

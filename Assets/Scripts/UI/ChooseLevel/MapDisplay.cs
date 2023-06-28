@@ -15,6 +15,9 @@ public class MapDisplay : MonoBehaviour
     [SerializeField] protected AudioMixerGroup _mixerGroup;
 
     private const string NormalSnapshotName = "Normal";
+    private const string PlayerPrefsUnlockedMapsKey = "unlockedMaps";
+    private int _firstMapIndex = 0;
+    private float _delayTransition = 0.5f;
     private int _runningTimeScale = 1;
     
     private string _sceneName;
@@ -26,7 +29,7 @@ public class MapDisplay : MonoBehaviour
         mapImage.sprite = map.Image;
         _sceneName = map.SceneName;
 
-        bool mapUnlocked = PlayerPrefs.GetInt("currentScene", 0) >= map.Index;
+        bool mapUnlocked = PlayerPrefs.GetInt(PlayerPrefsUnlockedMapsKey, _firstMapIndex) >= map.Index;
 
         lockImage.SetActive(!mapUnlocked);
         playButton.interactable = mapUnlocked;
@@ -40,7 +43,7 @@ public class MapDisplay : MonoBehaviour
     public void LoadScene()
     {
         Time.timeScale = _runningTimeScale;
-        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(0.5f);
+        _mixerGroup.audioMixer.FindSnapshot(NormalSnapshotName).TransitionTo(_delayTransition);
         _loadScreen.SetActive(true);
         SceneManager.LoadScene(_sceneName);
     }

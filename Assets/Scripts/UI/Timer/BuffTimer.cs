@@ -9,6 +9,8 @@ public class BuffTimer : MonoBehaviour
     [SerializeField] private Image _buffBarFilling;
     [SerializeField] private TMP_Text _timerBuffText;
 
+    private const string TextUp = " up ";
+
     private float _currentTime;
     private Coroutine _previosesTask;
 
@@ -41,7 +43,7 @@ public class BuffTimer : MonoBehaviour
             _currentTime -= Time.deltaTime;
             _buffBarFilling.fillAmount = _currentTime / buffTime;
 
-            _timerBuffText.text = buffName + " up " + Mathf.Round(_currentTime).ToString();
+            _timerBuffText.text = buffName + TextUp + Mathf.Round(_currentTime).ToString();
 
             yield return null;
         }

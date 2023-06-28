@@ -51,7 +51,7 @@ public class DamagePopup : MonoBehaviour
     }
 
     public void Setup(float DamageAmount)
-    {
+    {       
         _textMeshPro.SetText(DamageAmount.ToString());
         _textColor = _textMeshPro.color;
         _disappearTimer = 0.1f;

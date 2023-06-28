@@ -7,6 +7,8 @@ public class FinishLevel : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private int _rewardsCoin;
 
+    private const string PlayerPrefsUnlockedMapsKey = "unlockedMaps";
+
     private void OnEnable()
     {
         _finishZone.Entered += FinishLvl;
@@ -20,6 +22,6 @@ public class FinishLevel : MonoBehaviour
     public void FinishLvl()
     {
         _player.TakeMoney(_rewardsCoin);
-        PlayerPrefs.SetInt("currentScene", SceneManager.GetActiveScene().buildIndex);        
+        PlayerPrefs.SetInt(PlayerPrefsUnlockedMapsKey, SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -5,6 +5,7 @@ public class SwitchMap : MonoBehaviour
     [SerializeField] private ScriptableObject[] _maps;
     [SerializeField] private MapDisplay _mapDisplay;
 
+    private int _firstMapIndex = 0;
     private int _currentIndex;
 
     private void Awake()
@@ -14,12 +15,13 @@ public class SwitchMap : MonoBehaviour
 
     public void ChooseMap(int switchMap)
     {
+        int _lastMapIndex = _maps.Length - 1;
         _currentIndex += switchMap;
 
-        if (_currentIndex < 0)
-            _currentIndex = _maps.Length - 1;
-        else if (_currentIndex > _maps.Length - 1)
-            _currentIndex = 0;
+        if (_currentIndex < _firstMapIndex)
+            _currentIndex = _lastMapIndex;
+        else if (_currentIndex > _lastMapIndex)
+            _currentIndex = _firstMapIndex;
 
         if (_mapDisplay != null)
             _mapDisplay.DisplayMap((Map)_maps[_currentIndex]);

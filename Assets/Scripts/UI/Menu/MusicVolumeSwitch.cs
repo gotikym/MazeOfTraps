@@ -33,13 +33,13 @@ public class MusicVolumeSwitch : MonoBehaviour
         if (PlayerPrefs.GetInt(NameKeyMusic) == ValueMusicOff)
         {
             _musicButtonImage.sprite = _iconMusicOn;
-            AudioListener.volume = 1f;
+            AudioListener.volume = ValueMusicOn;
             _isMusicOn = true;
         }
         else if (PlayerPrefs.GetInt(NameKeyMusic) == ValueMusicOn)
         {
             _musicButtonImage.sprite = _iconMusicOff;
-            AudioListener.volume = 0f;
+            AudioListener.volume = ValueMusicOff;
             _isMusicOn = false;
         }
     }
