@@ -5,6 +5,11 @@ public class DamagePopup : MonoBehaviour
 {
     [SerializeField] private Transform _damagePopupSpawner;
 
+    private float _disappearSpeed = 4f;
+    private float _dividerInHalf = 0.5f;
+    private int _minSpread = -10;
+    private int _maxSpread = 10;
+
     private TextMeshPro _textMeshPro;
     private float _disappearTimer;
     private float _maxDisappearTimer;
@@ -23,7 +28,7 @@ public class DamagePopup : MonoBehaviour
         transform.position += _moveVector * Time.deltaTime;
         _moveVector -= _moveVector * moveYSpeed * Time.deltaTime;
 
-        if (_disappearTimer > _maxDisappearTimer * 0.5f)
+        if (_disappearTimer > _maxDisappearTimer * _dividerInHalf)
             transform.localScale += Vector3.one * increaseScaleAmount * Time.deltaTime;
         else
             transform.localScale -= Vector3.one * increaseScaleAmount * Time.deltaTime;
@@ -32,8 +37,7 @@ public class DamagePopup : MonoBehaviour
 
         if (_disappearTimer < 0)
         {
-            float disappearSpeed = 4f;
-            _textColor.a -= disappearSpeed * Time.deltaTime;
+            _textColor.a -= _disappearSpeed * Time.deltaTime;
             _textMeshPro.color = _textColor;
 
             if (_textColor.a < 0)
@@ -56,6 +60,6 @@ public class DamagePopup : MonoBehaviour
         _textColor = _textMeshPro.color;
         _disappearTimer = 0.1f;
         _maxDisappearTimer = _disappearTimer;
-        _moveVector = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+        _moveVector = new Vector3(Random.Range(_minSpread, _maxSpread), Random.Range(_minSpread, _maxSpread), Random.Range(_minSpread, _maxSpread));
     }
 }
