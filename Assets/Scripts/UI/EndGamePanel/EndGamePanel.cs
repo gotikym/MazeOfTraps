@@ -7,7 +7,6 @@ public abstract class EndGamePanel : MonoBehaviour
 {
     [SerializeField] protected GameObject Panel;
     [SerializeField] protected GameObject LoadScreen;
-    [SerializeField] protected AudioSource BackGroundMusic;
     [SerializeField] protected AudioSource EndGameMusic;
     [SerializeField] protected AudioMixerGroup MixerGroup;
 
@@ -45,7 +44,6 @@ public abstract class EndGamePanel : MonoBehaviour
     {
         Panel.SetActive(true);
         Time.timeScale = StoppedTimeScale;
-        BackGroundMusic.Stop();
         EndGameMusic.Play();
     }
 }

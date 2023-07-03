@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MazeGenerator
 {
-    private int _width = 20;
-    private int _height = 20;
+    private int _width = 15;
+    private int _height = 15;
 
     public Maze GenerateMaze()
     {
