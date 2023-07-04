@@ -16,6 +16,11 @@ public class Shop : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _template.SellButtonClick -= OnSellButtonClick;
+    }
+
     private void AddItem(Goods goods)
     {
         var view = Instantiate(_template, _itemContainer.transform);
@@ -23,24 +28,14 @@ public class Shop : MonoBehaviour
         view.Render(goods);
     }
 
-    private void OnSellButtonClick(Goods goods, GoodsView view)
+    private void OnSellButtonClick(Goods goods)
     {
-        TrySellGoods(goods, view);
+        TrySellGoods(goods);
     }
 
-    private void TrySellGoods(Goods goods, GoodsView view)
+    private void TrySellGoods(Goods goods)
     {
-        if (goods.Price <= _player.Money)
-        {
-            _player.BuyGoods(goods);
-            goods.Buy();
-            view.SellButtonClick -= OnSellButtonClick;
-            DisableItem(view);
-        }
-    }
-
-    private void DisableItem(GoodsView view)
-    {
-        view.gameObject.SetActive(false);
+        if (goods.Price <= _player.Money)        
+            _player.BuyGoods(goods);        
     }
 }

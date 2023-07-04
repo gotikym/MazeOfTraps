@@ -8,9 +8,13 @@ public class MoneyBalance : MonoBehaviour
 
     private const string TextX = " x ";
 
+    private void Start()
+    {
+        _money.text = _player.Money.ToString() + TextX;        
+    }
+
     private void OnEnable()
     {
-        _money.text = _player.Money.ToString() + TextX;
         _player.MoneyChanged += OnMoneyChanged;
     }
 

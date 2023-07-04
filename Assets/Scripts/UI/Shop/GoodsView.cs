@@ -12,24 +12,16 @@ public class GoodsView : MonoBehaviour
 
     private Goods _goods;
 
-    public event UnityAction<Goods, GoodsView> SellButtonClick;
+    public event UnityAction<Goods> SellButtonClick;
 
     private void OnEnable()
     {
         _sellButton.onClick.AddListener(OnButtonClick);
-        _sellButton.onClick.AddListener(TryLockItem);
     }
 
     private void OnDisable()
     {
         _sellButton.onClick.RemoveListener(OnButtonClick);
-        _sellButton.onClick.RemoveListener(TryLockItem);
-    }
-
-    private void TryLockItem()
-    {
-        if (_goods.IsBuyed)
-            _sellButton.interactable = false;
     }
 
     public void Render(Goods goods)
@@ -42,6 +34,6 @@ public class GoodsView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        SellButtonClick?.Invoke(_goods, this);
+        SellButtonClick?.Invoke(_goods);
     }
 }
